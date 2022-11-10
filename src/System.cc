@@ -30,7 +30,7 @@
 #include <unistd.h>
 namespace ORB_SLAM2
 {
-
+//开造
 //系统的构造函数，将会启动其他的线程
 System::System(const string &strVocFile,					//词典文件路径
 			   const string &strSettingsFile,				//配置文件路径
