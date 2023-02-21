@@ -102,7 +102,10 @@ Frame::Frame(const Frame &frame)
         SetPose(frame.mTcw);
 }
 
-
+//有3种构造函数：
+// rgb双目  (此处即是！)
+// rgbd单目
+// rgb单目
 /**
  * @brief 为双目相机准备的构造函数
  * 

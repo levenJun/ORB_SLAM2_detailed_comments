@@ -157,6 +157,7 @@ System::System(const string &strVocFile,					//词典文件路径
 }
 
 //双目输入时的追踪器接口
+//lv：运行主函数
 cv::Mat System::TrackStereo(const cv::Mat &imLeft, 		//左侧图像
 							const cv::Mat &imRight, 	//右侧图像
 							const double &timestamp)	//时间戳
@@ -218,6 +219,7 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, 		//左侧图像
     }//检查是否有复位的操作
 
     //用矩阵Tcw来保存估计的相机 位姿，运动追踪器的GrabImageStereo函数才是真正进行运动估计的函数
+    //lv：真正开始前端tracking!
     cv::Mat Tcw = mpTracker->GrabImageStereo(imLeft,imRight,timestamp);
 
     //给运动追踪状态上锁
