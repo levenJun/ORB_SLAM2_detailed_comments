@@ -399,7 +399,7 @@ protected:
     cv::Mat Cw; ///< Stereo middel point. Only for visualization
 
     /// MapPoints associated to keypoints
-    std::vector<MapPoint*> mvpMapPoints;
+    std::vector<MapPoint*> mvpMapPoints;    //lv:在Frame2Frame步骤，作为RefF的参考临时Map
 
     // BoW
     KeyFrameDatabase* mpKeyFrameDB;

@@ -478,7 +478,7 @@ void Tracking::Track()
             {
                 // Local Mapping might have changed some MapPoints tracked in last frame
                 // Step 2.1 检查并更新上一帧被替换的MapPoints
-                // 局部建图线程则可能会对原有的地图点进行替换.在这里进行检查
+                // 局部建图线程则可能会对原有的地图点进行替换.在这里进行检查,并fix                
                 CheckReplacedInLastFrame();
 
                 // Step 2.2 运动模型是空的或刚完成重定位，跟踪参考关键帧；否则恒速模型跟踪
@@ -1326,9 +1326,11 @@ bool Tracking::TrackWithMotionModel()
     // Update last frame pose according to its reference keyframe
     // Create "visual odometry" points
     // Step 1：更新上一帧的位姿；对于双目或RGB-D相机，还会根据深度值生成临时地图点
+    //上一帧临时地图：mLastFrame.mvpMapPoints
     UpdateLastFrame();
 
     // Step 2：根据之前估计的速度，用恒速模型得到当前帧的初始位姿。
+    // 这里的速度不考虑时间差吗？
     mCurrentFrame.SetPose(mVelocity*mLastFrame.mTcw);
     
     // 清空当前帧的地图点

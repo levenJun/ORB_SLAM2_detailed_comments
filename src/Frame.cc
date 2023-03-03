@@ -866,6 +866,8 @@ void Frame::ComputeStereoMatches()
 	// 右图特征点数量，N表示数量 r表示右图，且不能被修改
     const int Nr = mvKeysRight.size();
 
+    //lv: 遍历右图的所有特征点：对单个右图特征 kp(kpX,kpY)， 因为有多层金字塔 尺度存在，估计 kp 的列 kpX，
+    //lv: 那么其可能作用的行范围是[kpY + r, kpY -r]且r与 kp所在具体的金字塔层数有关
 	// Step 1. 行特征点统计。 考虑用图像金字塔尺度作为偏移，左图中对应右图的一个特征点可能存在于多行，而非唯一的一行
     for(int iR = 0; iR < Nr; iR++) {
 
@@ -881,7 +883,7 @@ void Frame::ComputeStereoMatches()
 
         // 将特征点ir保证在可能的行号中
         for(int yi=minr;yi<=maxr;yi++)
-            vRowIndices[yi].push_back(iR);
+            vRowIndices[yi].push_back(iR);      //lv:单个右图特征点，存储进其可能的作用行
     }
 
     // 下面是 粗匹配 + 精匹配的过程
@@ -1070,11 +1072,11 @@ void Frame::ComputeStereoMatches()
     // 块匹配相似度阈值判断，归一化sad最小，并不代表就一定是匹配的，比如光照变化、弱纹理、无纹理等同样会造成误匹配
     // 误匹配判断条件  norm_sad > 1.5 * 1.4 * median
     sort(vDistIdx.begin(),vDistIdx.end());
-    const float median = vDistIdx[vDistIdx.size()/2].first;
-    const float thDist = 1.5f*1.4f*median;
+    const float median = vDistIdx[vDistIdx.size()/2].first;     //lv:左边所有特征点匹配到的最优右特征<视差，右U>列表，取列表中的视差中值
+    const float thDist = 1.5f*1.4f*median;                      //lv:视差阈值thDist=视差中值*1.4*1.5
 
     for(int i=vDistIdx.size()-1;i>=0;i--) {
-        if(vDistIdx[i].first<thDist)
+        if(vDistIdx[i].first<thDist)                            //lv:双目特征匹配结果，只取小于视差阈值thDist的结果，过大的认为不稳定？！(直接置为-1)
             break;
         else {
 			// 误匹配点置为-1，和初始化时保持一直，作为error code
