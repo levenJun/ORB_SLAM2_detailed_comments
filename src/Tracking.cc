@@ -656,7 +656,7 @@ void Tracking::Track()
                 mLastFrame.GetRotationInverse().copyTo(LastTwc.rowRange(0,3).colRange(0,3));
                 mLastFrame.GetCameraCenter().copyTo(LastTwc.rowRange(0,3).col(3));
                 // mVelocity = Tcl = Tcw * Twl,表示上一帧到当前帧的变换， 其中 Twl = LastTwc
-                mVelocity = mCurrentFrame.mTcw*LastTwc; 
+                mVelocity = mCurrentFrame.mTcw*LastTwc;         //lv:所谓估计的速度,其实就是相邻两帧间的变换(认为这个变换恒定)
             }
             else
                 //否则速度为空

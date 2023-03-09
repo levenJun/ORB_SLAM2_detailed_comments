@@ -276,6 +276,7 @@ void LocalMapping::MapPointCulling()
         }
         else if(((int)nCurrentKFid-(int)pMP->mnFirstKFid)>=2 && pMP->Observations()<=cnThObs)
         {
+            //lv:被观测到次数太少,而且距离被观测首帧已经过去2个KF了
             // Step 2.3：从该点建立开始，到现在已经过了不小于2个关键帧
             // 但是观测到该点的相机数却不超过阈值cnThObs，从地图中删除
             pMP->SetBadFlag();

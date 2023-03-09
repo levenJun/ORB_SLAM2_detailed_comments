@@ -400,6 +400,7 @@ protected:
 
     /// MapPoints associated to keypoints
     std::vector<MapPoint*> mvpMapPoints;    //lv:在Frame2Frame步骤，作为RefF的参考临时Map
+                                            //lv:在Frame2Map步骤,   会被重新刷新,从临时Map添加新地图点??(待验)
 
     // BoW
     KeyFrameDatabase* mpKeyFrameDB;
