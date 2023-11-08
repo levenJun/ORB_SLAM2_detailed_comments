@@ -1051,7 +1051,7 @@ void LoopClosing::RunGlobalBundleAdjustment(unsigned long nLoopKF)
                 }
                 // 记录未矫正的关键帧的位姿
                 pKF->mTcwBefGBA = pKF->GetPose();
-                // 记录已经矫正的关键帧的位姿
+                // 刷新已经矫正的关键帧的位姿
                 pKF->SetPose(pKF->mTcwGBA);
                 // 从列表中移除
                 lpKFtoCheck.pop_front();
